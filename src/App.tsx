@@ -6,6 +6,7 @@ import './App.css';
 
 
 
+// APP COMPONENT RESPONSIBLE FOR MANAGING ALL OUR STATE 
 const App: React.FC = () => {
   // Generic Type <string | number | Array<string>>
 const [todo , setTodo] = useState<string>(""); 
