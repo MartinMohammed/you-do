@@ -1,0 +1,29 @@
+.todos__single{ /* Icons and text are flexed along the x axis */
+    display: flex; 
+    width: 29.5%; 
+    border-radius: 5px; 
+    align-items: center;
+
+    padding: 20px; 
+    margin-top: 15px; 
+    background-image: url("https://img.freepik.com/free-photo/crumpled-yellow-paper-background-close-up_60487-2390.jpg?size=626&ext=jpg");
+    transition: 0.2s; 
+}
+
+.todos__single--text{
+    flex: 1; /* flex= shorthand for flex-grow / flex-shring / flex-basis => push all REST elements right*/
+    padding: 5px; 
+    /* border: none;  */
+    font-size: 20px; 
+}
+
+.todos__single--text:focus{ /* input box */
+    outline: none; 
+}
+
+.icon{
+    margin-left: 10px; 
+    font-size: 25px; 
+    cursor: pointer; 
+}
+
