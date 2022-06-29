@@ -7,12 +7,15 @@ import "./SingleTodo.css"
 
 type Props = {
     todo: Todo; 
-    todos: Array<Todo>
-    setTodos: React.Dispatch<React.SetStateAction<Array<Todo>>>
-    
+    // todos: Array<Todo>
+    // setTodos: React.Dispatch<React.SetStateAction<Array<Todo>>>
+    setDone: (id: string) => void;
+    removeTodo: (id: string) => void; 
+    editTodo: (id: string, text: string) => void;
+  
 }
 
-const SingleTodo: React.FC<Props> = ({todo: todoItem, todos, setTodos}: Props) => {
+const SingleTodo: React.FC<Props> = ({todo: todoItem,editTodo , setDone, removeTodo}: Props) => {
   const [onEdit, setOnEdit] = useState<boolean>(false);
   const [editTodoText, setEditTodoText] = useState<string>(todoItem.todo)
   const inputRef = useRef<HTMLInputElement>(null);
@@ -24,19 +27,25 @@ const SingleTodo: React.FC<Props> = ({todo: todoItem, todos, setTodos}: Props) =
 
   const handleDone = function(event: React.MouseEvent<SVGElement>, id: string): void {
     event.preventDefault();
-    setTodos((prevTodos) => {
-      return prevTodos.map((singleTodo) => 
-        // GOOD CHOISE => map will iteratre through the array and the objects are 
-        // a reference to the 
-        singleTodo.id === id ? {...singleTodo, isDone: !singleTodo.isDone} : singleTodo
-      )
-    })
+    setDone(id)
+
+    // ! useState implementation
+    // setTodos((prevTodos) => {
+    //   return prevTodos.map((singleTodo) => 
+    //     // GOOD CHOISE => map will iteratre through the array and the objects are 
+    //     // a reference to the 
+    //     singleTodo.id === id ? {...singleTodo, isDone: !singleTodo.isDone} : singleTodo
+    //   )
+    // })
   }
   const handleDelete = function(event: React.MouseEvent<SVGElement>, id: string): void {
-    setTodos((prevTodos) => {
-      const newTodoList = prevTodos.filter((singleTodoItem) => singleTodoItem.id !== id)
-      return newTodoList
-    })
+    removeTodo(id)
+    
+    // ! useState implementation
+    // setTodos((prevTodos) => {
+    //   const newTodoList = prevTodos.filter((singleTodoItem) => singleTodoItem.id !== id)
+    //   return newTodoList
+    // })
   }
 
   const handleToggleEditMode = function(event: React.MouseEvent<SVGElement>): void{
@@ -52,13 +61,15 @@ const SingleTodo: React.FC<Props> = ({todo: todoItem, todos, setTodos}: Props) =
 
   const handleSubmit = function(event: React.FormEvent<HTMLFormElement>){
     event.preventDefault();
-    // save the changes of the edited todo 
-    setTodos((prevTodos) => {
-      return prevTodos.map((singlePrevTodo) => {
-        // if editing todo = current todo - update its text and return it so else return wrong todo item 
-        return singlePrevTodo.id === todoItem.id ? {...singlePrevTodo, todo: editTodoText}: singlePrevTodo
-      })
-    })
+
+    editTodo(todoItem.id, editTodoText)
+    // // save the changes of the edited todo 
+    // setTodos((prevTodos) => {
+    //   return prevTodos.map((singlePrevTodo) => {
+    //     // if editing todo = current todo - update its text and return it so else return wrong todo item 
+    //     return singlePrevTodo.id === todoItem.id ? {...singlePrevTodo, todo: editTodoText}: singlePrevTodo
+    //   })
+    // })
     setOnEdit(false)
   }
 
